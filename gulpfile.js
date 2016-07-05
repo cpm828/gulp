@@ -13,7 +13,7 @@ const concat = require('gulp-concat'); // 压缩js文件为1个
 const imagemin = require('gulp-imagemin'); // 图片压缩
 const browserSync = require('browser-sync').create(); // 自动刷新
 
-gulp.task('jade', () => {
+gulp.task('jade', function(){
   return gulp.src('./src/*.jade')
     .pipe(gulpJade({
       jade: jade,
@@ -22,7 +22,7 @@ gulp.task('jade', () => {
     .pipe(gulp.dest('dist/'))
 });
 
-gulp.task('sass', () => {
+gulp.task('sass', function(){
   return gulp.src("./src/css/*.scss")
     .pipe(sass().on('error', sass.logError))
     .pipe(prefixer())
@@ -30,7 +30,7 @@ gulp.task('sass', () => {
     .pipe(browserSync.stream());
 });
 
-gulp.task('img', () => {
+gulp.task('img', function(){
 	return gulp.src('src/img/*')
     .pipe(imagemin())
   	.pipe(gulp.dest('dist/img'))
@@ -48,7 +48,7 @@ gulp.task('es6', () => {
 });
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['sass', 'jade', 'es6', 'img'] , () => {
+gulp.task('serve', ['sass', 'jade', 'es6', 'img'] , function(){
   browserSync.init({
     server: "./dist"
   });

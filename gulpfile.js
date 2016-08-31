@@ -6,12 +6,15 @@ const gulpJade = require('gulp-jade'); // gulp-jade
 const sass = require('gulp-sass'); // sass
 const prefixer = require('gulp-autoprefixer'); // 代码不压缩
 
-const sourcemaps = require('gulp-sourcemaps');
+const sourcemaps = require('gulp-sourcemaps'); // js文件解压缩
 const babel = require('gulp-babel'); // es6转换
 const concat = require('gulp-concat'); // 压缩js文件为1个
 
 const imagemin = require('gulp-imagemin'); // 图片压缩
 const browserSync = require('browser-sync').create(); // 自动刷新
+
+const fileinclude  = require('gulp-file-include'); // 引入公共文件
+
 
 gulp.task('jade', function(){
   return gulp.src('./src/*.jade')
@@ -45,6 +48,15 @@ gulp.task('es6', () => {
 		.pipe(concat('main.js'))
 		.pipe(sourcemaps.write('.'))
 		.pipe(gulp.dest('dist/js'));
+});
+
+gulp.task('fileinclude', function() {
+  gulp.src('src/**.html')
+      .pipe(fileinclude({
+        prefix: '@@',
+        basepath: '@file'
+      }))
+      .pipe(gulp.dest('dist'));
 });
 
 // Static Server + watching scss/html files

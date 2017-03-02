@@ -1,7 +1,7 @@
 const gulp = require('gulp');
 
-const jade = require('jade'); // jade
-const gulpJade = require('gulp-jade'); // gulp-jade
+const pug = require('pug'); // pug
+const gulpPug = require('gulp-pug'); // gulp-pug
 
 const sass = require('gulp-sass'); // sass
 const prefixer = require('gulp-autoprefixer'); // 代码不压缩
@@ -16,10 +16,10 @@ const browserSync = require('browser-sync').create(); // 自动刷新
 const fileinclude  = require('gulp-file-include'); // 引入公共文件
 
 
-gulp.task('jade', function(){
-  return gulp.src('./src/*.jade')
-    .pipe(gulpJade({
-      jade: jade,
+gulp.task('pug', function(){
+  return gulp.src('./src/*.pug')
+    .pipe(gulpPug({
+      pug: pug,
       pretty: true
     }))
     .pipe(gulp.dest('dist/'))
@@ -60,14 +60,14 @@ gulp.task('fileinclude', function() {
 });
 
 // Static Server + watching scss/html files
-gulp.task('serve', ['sass', 'jade', 'es6', 'img'] , function(){
+gulp.task('serve', ['sass', 'pug', 'es6', 'img'] , function(){
   browserSync.init({
     server: "./dist"
   });
   gulp.watch("./src/css/*.scss", ['sass']);
   gulp.watch("./src/img/*", ['img']).on('change', browserSync.reload);
   gulp.watch("./src/js/*.js", ['es6']).on('change', browserSync.reload);
-  gulp.watch("./src/*.jade", ['jade']).on('change', browserSync.reload);
+  gulp.watch("./src/*.pug", ['pug']).on('change', browserSync.reload);
 });
 
 gulp.task('default', ['serve']);

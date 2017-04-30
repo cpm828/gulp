@@ -1,4 +1,4 @@
-const gulp = require('gulp');
+const gulp = require('gulp'); // gulp
 
 const pug = require('pug'); // pug
 const gulpPug = require('gulp-pug'); // gulp-pug
